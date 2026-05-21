@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Menu - Exquisite by Thaitanium</title>
+    <!-- นำเข้า Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- นำเข้าฟอนต์ Cinzel และ Montserrat จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .font-luxury {
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* จุดไข่ปลาเชื่อมระหว่างรายการเมนูกับราคา */
+        .dotted-leader {
+            border-bottom: 2px dotted #4b5563; /* สีเทาเข้มเพื่อความหรูหราแบบพอดีสายตา */
+            position: relative;
+            top: -6px; /* ปรับระดับให้อยู่กึ่งกลางตัวอักษรพอดี */
+        }
+
+        /* ตั้งค่าสำหรับการพิมพ์และการบันทึกเป็น PDF ขนาด A4 แนวนอน */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body {
+                background-color: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-page {
+                width: 297mm;
+                height: 210mm;
+                max-width: 297mm;
+                max-height: 210mm;
+                display: flex !important;
+                flex-direction: row !important;
+                overflow: hidden;
+            }
+            /* บังคับสัดส่วนซ้าย-ขวาฝั่งละ 50% ตอนพิมพ์ */
+            .print-half {
+                width: 50% !important;
+                height: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+    <!-- คอนเทนเนอร์หลักของหน้าจอเมนูไวน์ -->
+    <div class="print-page flex flex-col md:flex-row min-h-screen">
+        
+        <!-- ฝั่งซ้าย: รูปภาพและโลโก้แบรนดิ้งสีทองสุดหรู (50% ของหน้าจอ) -->
+        <div class="print-half relative w-full md:w-1/2 min-h-[45vh] md:min-h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+            <!-- เลเยอร์สีดำโปร่งแสงสร้างความหรูหราลุ่มลึก -->
+            <div class="absolute inset-0 bg-black/65 md:bg-black/50"></div>
+            
+            <!-- ป้ายตราโลโก้กึ่งกลาง -->
+            <div class="absolute inset-0 flex items-center justify-center p-4">
+                <div class="bg-black/95 border border-amber-500/20 p-10 md:p-14 rounded-sm shadow-2xl backdrop-blur-sm text-center transform transition duration-500 hover:scale-105 max-w-sm md:max-w-md">
+                    <!-- คำว่า EXQUISITE สีทองคำหรูหราโดดเด่นสะกดสายตา -->
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[0.1em] text-[#d4af37] font-luxury mb-2 drop-shadow-[0_2px_10px_rgba(212,175,55,0.3)]">
+                        EXQUISITE
+                    </h1>
+                    <!-- รายละเอียดแบรนดิ้งสีเทาด้านล่าง -->
+                    <p class="text-gray-400 text-xs md:text-sm tracking-[0.4em] uppercase mb-4">
+                        by thaitanium
+                    </p>
+                    <!-- เส้นคั่นบางเฉียบสีทองสไตล์โมเดิร์น -->
+                    <div class="w-20 h-[1px] bg-[#d4af37]/40 mx-auto my-6"></div>
+                    <h2 class="text-lg md:text-xl font-light tracking-[0.5em] uppercase text-gray-200">
+                        Wine<br>Menu
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- ฝั่งขวา: ตารางรายชื่อไวน์และราคาทั้งหมด แยกหมวดหมู่เรียบร้อย (50% ของหน้าจอ) -->
+        <div class="print-half w-full md:w-1/2 bg-[#050505] p-8 md:p-12 lg:p-16 flex flex-col justify-between">
+            
+            <!-- เส้นตกแต่งด้านบนสุดของรายการ -->
+            <div class="w-full h-[1px] bg-gray-700 mb-6 hidden md:block"></div>
+
+            <!-- คอนเทนเนอร์หมวดหมู่ไวน์ -->
+            <div class="flex-grow flex flex-col justify-center space-y-6 md:space-y-8">
+                
+                <!-- หมวดหมู่ที่ 1: RED WINES (ย้ายขึ้นมาด้านบนสุด) -->
+                <div>
+                    <h3 class="text-xs md:text-sm tracking-[0.25em] text-[#d4af37] font-luxury font-bold uppercase mb-3 border-b border-zinc-800 pb-1">
+                        Red Wines
+                    </h3>
+                    <div class="space-y-3.5">
+                        <!-- รายการที่ 1 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">T'Air D'Oc Syrah</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 2 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Croix Du Marquis Merlot</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 3 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Cella Lambrusco Soft Red</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 4 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Saurus Patagonia Malbec</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">112$</span>
+                        </div>
+                        <!-- รายการที่ 5 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Frontera Cabernet Sauvignon</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">112$</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- หมวดหมู่ที่ 2: WHITE WINES (อยู่ตรงกลาง) -->
+                <div>
+                    <h3 class="text-xs md:text-sm tracking-[0.25em] text-[#d4af37] font-luxury font-bold uppercase mb-3 border-b border-zinc-800 pb-1">
+                        White Wines
+                    </h3>
+                    <div class="space-y-3.5">
+                        <!-- รายการที่ 1 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">T'Air d'Oc Sauvignon Blanc</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 2 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Croix Du Marquis Sauvignon</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 3 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Jacob's Creek Sauvignon Blanc</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">98$</span>
+                        </div>
+                        <!-- รายการที่ 4 -->
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Frontera Chardonnay</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">112$</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- หมวดหมู่ที่ 3: SPARKLING WINE (ย้ายลงมาด้านล่างสุด) -->
+                <div>
+                    <h3 class="text-xs md:text-sm tracking-[0.25em] text-[#d4af37] font-luxury font-bold uppercase mb-3 border-b border-zinc-800 pb-1">
+                        Sparkling Wine
+                    </h3>
+                    <div class="space-y-3.5">
+                        <div class="flex items-baseline w-full group">
+                            <span class="text-xs md:text-[13px] tracking-wider uppercase pr-4 whitespace-nowrap text-gray-200 group-hover:text-white transition-colors">Casillero del Diablo Devil's Brut</span>
+                            <div class="flex-grow dotted-leader mx-2"></div>
+                            <span class="text-xs md:text-sm tracking-wider pl-4 text-white">148$</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- เส้นตกแต่งด้านล่างสุดของรายการ -->
+            <div class="w-full h-[1px] bg-gray-700 mt-6 mb-4 hidden md:block"></div>
+
+            <!-- ท้ายกระดาษ: ชื่อร้านจัดวางกึ่งกลางอย่างเรียบง่ายสง่างาม -->
+            <div class="flex justify-center items-end mt-4 text-xs tracking-widest text-gray-400">
+                <div class="leading-relaxed uppercase text-center">
+                    Exquisite by Thaitanium
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
